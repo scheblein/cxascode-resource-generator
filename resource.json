@@ -1,42 +1,33 @@
 {
-  "name": "speechTextAnalyticsSettingsResponse",
-  "packageName": "speechandtextanalyticsSettings",
+  "name": "recordingSettings",
+  "packageName": "recordingSettings",
   "properties": [
     {
-      "name": "defaultProgram",
-      "type": "object",
-      "description": "Setting to choose name for the default program for topic detection",
+      "name": "maxSimultaneousStreams",
+      "type": "integer",
+      "description": "Maximum number of simultaneous screen recording streams",
       "required": false,
       "isStringArray": false,
       "isReference": false,
-      "flattenFunction": "flattenAddressableEntityRef",
-      "buildFunction": "buildAddressableEntityRef",
       "tfSchemaData": {
-        "type": "schema.TypeList",
-        "maxItems": 1,
-        "element": "addressableEntityRefResource"
-      },
-      "nestedObject": {
-        "name": "addressableEntityRef",
-        "properties": []
+        "type": "schema.TypeInt"
       }
     },
     {
-      "name": "expectedDialects",
-      "type": "array",
-      "description": "Setting to choose expected dialects",
+      "name": "maxConfigurableScreenRecordingStreams",
+      "type": "integer",
+      "description": "Upper limit that maxSimultaneousStreams can be configured",
       "required": false,
-      "isStringArray": true,
+      "isStringArray": false,
       "isReference": false,
       "tfSchemaData": {
-        "type": "schema.TypeList",
-        "element": "&schema.Schema{Type: schema.TypeString}"
+        "type": "schema.TypeInt"
       }
     },
     {
-      "name": "textAnalyticsEnabled",
+      "name": "regionalRecordingStorageEnabled",
       "type": "boolean",
-      "description": "Setting to enable/disable text analytics",
+      "description": "Store call recordings in the region where they are intended to be recorded, otherwise in the organization's home region",
       "required": false,
       "isStringArray": false,
       "isReference": false,
@@ -45,14 +36,25 @@
       }
     },
     {
-      "name": "agentEmpathyEnabled",
-      "type": "boolean",
-      "description": "Setting to enable/disable Agent Empathy setting",
+      "name": "recordingPlaybackUrlTtl",
+      "type": "integer",
+      "description": "The duration in minutes for which the generated URL for recording playback remains valid.The default duration is set to 60 minutes, with a minimum allowable duration of 2 minutes and a maximum of 60 minutes.",
       "required": false,
       "isStringArray": false,
       "isReference": false,
       "tfSchemaData": {
-        "type": "schema.TypeBool"
+        "type": "schema.TypeInt"
+      }
+    },
+    {
+      "name": "recordingBatchDownloadUrlTtl",
+      "type": "integer",
+      "description": "The duration in minutes for which the generated URL for recording batch download remains valid.The default duration is set to 60 minutes, with a minimum allowable duration of 2 minutes and a maximum of 60 minutes.",
+      "required": false,
+      "isStringArray": false,
+      "isReference": false,
+      "tfSchemaData": {
+        "type": "schema.TypeInt"
       }
     }
   ]

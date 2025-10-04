@@ -1,0 +1,14 @@
+package: recording_settings
+mainObject: RecordingSettings
+operations:
+  - type: read
+    method: GET
+    path: /api/v2/recording/settings
+    link: https://developer.genesys.cloud/devapps/api-explorer#get-api-v2-recording-settings
+  - type: update
+    method: PUT
+    path: /api/v2/recording/settings
+    link: https://developer.genesys.cloud/devapps/api-explorer#put-api-v2-recording-settings
+documentation: true
+testFiles: true
+initTest: true
