@@ -1,0 +1,207 @@
+{
+  "name": "topic",
+  "packageName": "speechandtextanalyticsTopics",
+  "properties": [
+    {
+      "name": "name",
+      "type": "string",
+      "description": "",
+      "required": false,
+      "isStringArray": false,
+      "isReference": false,
+      "tfSchemaData": {
+        "type": "schema.TypeString"
+      }
+    },
+    {
+      "name": "description",
+      "type": "string",
+      "description": "",
+      "required": false,
+      "isStringArray": false,
+      "isReference": false,
+      "tfSchemaData": {
+        "type": "schema.TypeString"
+      }
+    },
+    {
+      "name": "published",
+      "type": "boolean",
+      "description": "",
+      "required": false,
+      "isStringArray": false,
+      "isReference": false,
+      "tfSchemaData": {
+        "type": "schema.TypeBool"
+      }
+    },
+    {
+      "name": "strictness",
+      "type": "string",
+      "description": "",
+      "required": false,
+      "isStringArray": false,
+      "isReference": false,
+      "tfSchemaData": {
+        "type": "schema.TypeString"
+      }
+    },
+    {
+      "name": "matchingType",
+      "type": "string",
+      "description": "",
+      "required": false,
+      "isStringArray": false,
+      "isReference": false,
+      "tfSchemaData": {
+        "type": "schema.TypeString"
+      }
+    },
+    {
+      "name": "programs",
+      "type": "array",
+      "description": "",
+      "required": false,
+      "isStringArray": false,
+      "isReference": false,
+      "flattenFunction": "flattenBaseProgramEntitys",
+      "buildFunction": "buildBaseProgramEntitys",
+      "tfSchemaData": {
+        "type": "schema.TypeList",
+        "element": "baseProgramEntityResource"
+      },
+      "nestedObject": {
+        "name": "baseProgramEntity",
+        "properties": [
+          {
+            "name": "name",
+            "type": "string",
+            "description": "",
+            "required": false,
+            "isStringArray": false,
+            "isReference": false,
+            "tfSchemaData": {
+              "type": "schema.TypeString"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "tags",
+      "type": "array",
+      "description": "",
+      "required": false,
+      "isStringArray": true,
+      "isReference": false,
+      "tfSchemaData": {
+        "type": "schema.TypeList",
+        "element": "&schema.Schema{Type: schema.TypeString}"
+      }
+    },
+    {
+      "name": "dialect",
+      "type": "string",
+      "description": "",
+      "required": false,
+      "isStringArray": false,
+      "isReference": false,
+      "tfSchemaData": {
+        "type": "schema.TypeString"
+      }
+    },
+    {
+      "name": "participants",
+      "type": "string",
+      "description": "",
+      "required": false,
+      "isStringArray": false,
+      "isReference": false,
+      "tfSchemaData": {
+        "type": "schema.TypeString"
+      }
+    },
+    {
+      "name": "phrases",
+      "type": "array",
+      "description": "",
+      "required": false,
+      "isStringArray": false,
+      "isReference": false,
+      "flattenFunction": "flattenPhrases",
+      "buildFunction": "buildPhrases",
+      "tfSchemaData": {
+        "type": "schema.TypeList",
+        "element": "phraseResource"
+      },
+      "nestedObject": {
+        "name": "phrase",
+        "properties": [
+          {
+            "name": "text",
+            "type": "string",
+            "description": "The phrase text",
+            "required": true,
+            "isStringArray": false,
+            "isReference": false,
+            "tfSchemaData": {
+              "type": "schema.TypeString"
+            }
+          },
+          {
+            "name": "strictness",
+            "type": "string",
+            "description": "The phrase strictness, default value is null",
+            "required": false,
+            "isStringArray": false,
+            "isReference": false,
+            "tfSchemaData": {
+              "type": "schema.TypeString"
+            }
+          },
+          {
+            "name": "sentiment",
+            "type": "string",
+            "description": "The phrase sentiment, default value is Unspecified. Note: Sentiment value for phrases is currently not in use and has no impact to the system.",
+            "required": false,
+            "isStringArray": false,
+            "isReference": false,
+            "tfSchemaData": {
+              "type": "schema.TypeString"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "publishedBy",
+      "type": "object",
+      "description": "",
+      "required": false,
+      "isStringArray": false,
+      "isReference": false,
+      "flattenFunction": "flattenAddressableEntityRef",
+      "buildFunction": "buildAddressableEntityRef",
+      "tfSchemaData": {
+        "type": "schema.TypeList",
+        "maxItems": 1,
+        "element": "addressableEntityRefResource"
+      },
+      "nestedObject": {
+        "name": "addressableEntityRef",
+        "properties": []
+      }
+    },
+    {
+      "name": "datePublished",
+      "type": "string",
+      "description": "Date time is represented as an ISO-8601 string. For example: yyyy-MM-ddTHH:mm:ss[.mmm]Z",
+      "required": false,
+      "isStringArray": false,
+      "isReference": false,
+      "tfSchemaData": {
+        "type": "schema.TypeString"
+      }
+    }
+  ]
+}
