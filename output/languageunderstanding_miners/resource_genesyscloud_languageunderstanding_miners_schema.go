@@ -20,9 +20,9 @@ const resourceName = "genesyscloud_languageunderstanding_miners"
 
 // SetRegistrar registers all of the resources, datasources and exporters in the package
 func SetRegistrar(regInstance registrar.Registrar) {
-	regInstance.RegisterResource(resourceName, ResourceLanguageunderstandingMiners())
-	regInstance.RegisterDataSource(resourceName, DataSourceLanguageunderstandingMiners())
-	regInstance.RegisterExporter(resourceName, LanguageunderstandingMinersExporter())
+	regInstance.RegisterResource(ResourceType, ResourceLanguageunderstandingMiners())
+	regInstance.RegisterDataSource(ResourceType, DataSourceLanguageunderstandingMiners())
+	regInstance.RegisterExporter(ResourceType, LanguageunderstandingMinersExporter())
 }
 
 // ResourceLanguageunderstandingMiners registers the genesyscloud_languageunderstanding_miners resource with Terraform

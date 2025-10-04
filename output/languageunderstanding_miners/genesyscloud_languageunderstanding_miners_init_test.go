@@ -28,7 +28,7 @@ func (r *registerTestInstance) registerTestResources() {
 	r.resourceMapMutex.Lock()
 	defer r.resourceMapMutex.Unlock()
 
-	providerResources[resourceName] = ResourceLanguageunderstandingMiners()
+	providerResources[ResourceType] = ResourceLanguageunderstandingMiners()
 	// TODO: Add references
 }
 
@@ -37,7 +37,7 @@ func (r *registerTestInstance) registerTestDataSources() {
 	r.datasourceMapMutex.Lock()
 	defer r.datasourceMapMutex.Unlock()
 
-	providerDataSources[resourceName] = DataSourceLanguageunderstandingMiners()
+	providerDataSources[ResourceType] = DataSourceLanguageunderstandingMiners()
 	// TODO: Add references
 }
 

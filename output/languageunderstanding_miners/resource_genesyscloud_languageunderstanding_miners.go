@@ -31,11 +31,11 @@ func getAllAuthLanguageunderstandingMinerss(ctx context.Context, clientConfig *p
 
 	miners, resp, err := proxy.getAllLanguageunderstandingMiners(ctx)
 	if err != nil {
-		return nil, util.BuildAPIDiagnosticError(resourceName, fmt.Sprintf("Failed to get languageunderstanding miners: %v", err), resp)
+		return nil, util.BuildAPIDiagnosticError(ResourceType, fmt.Sprintf("Failed to get languageunderstanding miners: %v", err), resp)
 	}
 
 	for _, miner := range *miners {
-		resources[*miner.Id] = &resourceExporter.ResourceMeta{Name: *miner.Name}
+		resources[*miner.Id] = &resourceExporter.ResourceMeta{BlockLabel: *miner.Name}
 	}
 
 	return resources, nil
@@ -51,7 +51,7 @@ func createLanguageunderstandingMiners(ctx context.Context, d *schema.ResourceDa
 	log.Printf("Creating languageunderstanding miners %s", *languageunderstandingMiners.Name)
 	miner, resp, err := proxy.createLanguageunderstandingMiners(ctx, &languageunderstandingMiners)
 	if err != nil {
-		return util.BuildAPIDiagnosticError(resourceName, fmt.Sprintf("Failed to create languageunderstanding miners: %s", err), resp)
+		return util.BuildAPIDiagnosticError(ResourceType, fmt.Sprintf("Failed to create languageunderstanding miners: %s", err), resp)
 	}
 
 	d.SetId(*miner.Id)
@@ -63,7 +63,7 @@ func createLanguageunderstandingMiners(ctx context.Context, d *schema.ResourceDa
 func readLanguageunderstandingMiners(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	sdkConfig := meta.(*provider.ProviderMeta).ClientConfig
 	proxy := getLanguageunderstandingMinersProxy(sdkConfig)
-	cc := consistency_checker.NewConsistencyCheck(ctx, d, meta, ResourceLanguageunderstandingMiners(), constants.DefaultConsistencyChecks, resourceName)
+	cc := consistency_checker.NewConsistencyCheck(ctx, d, meta, ResourceLanguageunderstandingMiners(), constants.ConsistencyChecks(), resourceName)
 
 	log.Printf("Reading languageunderstanding miners %s", d.Id())
 
@@ -71,9 +71,9 @@ func readLanguageunderstandingMiners(ctx context.Context, d *schema.ResourceData
 		miner, resp, getErr := proxy.getLanguageunderstandingMinersById(ctx, d.Id())
 		if getErr != nil {
 			if util.IsStatus404(resp) {
-				return retry.RetryableError(util.BuildWithRetriesApiDiagnosticError(resourceName, fmt.Sprintf("Failed to read languageunderstanding miners %s: %s", d.Id(), getErr), resp))
+				return retry.RetryableError(util.BuildWithRetriesApiDiagnosticError(ResourceType, fmt.Sprintf("Failed to read languageunderstanding miners %s: %s", d.Id(), getErr), resp))
 			}
-			return retry.NonRetryableError(util.BuildWithRetriesApiDiagnosticError(resourceName, fmt.Sprintf("Failed to read languageunderstanding miners %s: %s", d.Id(), getErr), resp))
+			return retry.NonRetryableError(util.BuildWithRetriesApiDiagnosticError(ResourceType, fmt.Sprintf("Failed to read languageunderstanding miners %s: %s", d.Id(), getErr), resp))
 		}
 
 		resourcedata.SetNillableValue(d, "name", miner.Name)
@@ -114,7 +114,7 @@ func deleteLanguageunderstandingMiners(ctx context.Context, d *schema.ResourceDa
 
 	resp, err := proxy.deleteLanguageunderstandingMiners(ctx, d.Id())
 	if err != nil {
-		return util.BuildAPIDiagnosticError(resourceName, fmt.Sprintf("Failed to delete languageunderstanding miners %s: %s", d.Id(), err), resp)
+		return util.BuildAPIDiagnosticError(ResourceType, fmt.Sprintf("Failed to delete languageunderstanding miners %s: %s", d.Id(), err), resp)
 	}
 
 	return util.WithRetries(ctx, 180*time.Second, func() *retry.RetryError {
@@ -125,9 +125,9 @@ func deleteLanguageunderstandingMiners(ctx context.Context, d *schema.ResourceDa
 				log.Printf("Deleted languageunderstanding miners %s", d.Id())
 				return nil
 			}
-			return retry.NonRetryableError(util.BuildWithRetriesApiDiagnosticError(resourceName, fmt.Sprintf("Error deleting languageunderstanding miners %s: %s", d.Id(), err), resp))
+			return retry.NonRetryableError(util.BuildWithRetriesApiDiagnosticError(ResourceType, fmt.Sprintf("Error deleting languageunderstanding miners %s: %s", d.Id(), err), resp))
 		}
 
-		return retry.RetryableError(util.BuildWithRetriesApiDiagnosticError(resourceName, fmt.Sprintf("languageunderstanding miners %s still exists", d.Id()), resp))
+		return retry.RetryableError(util.BuildWithRetriesApiDiagnosticError(ResourceType, fmt.Sprintf("languageunderstanding miners %s still exists", d.Id()), resp))
 	})
 }

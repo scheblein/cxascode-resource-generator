@@ -29,11 +29,11 @@ func dataSourceLanguageunderstandingMinersRead(ctx context.Context, d *schema.Re
 		minerId, resp, retryable, err := proxy.getLanguageunderstandingMinersIdByName(ctx, name)
 
 		if err != nil && !retryable {
-			return retry.NonRetryableError(util.BuildWithRetriesApiDiagnosticError(resourceName, fmt.Sprintf("Error searching languageunderstanding miners %s | error: %s", name, err), resp))
+			return retry.NonRetryableError(util.BuildWithRetriesApiDiagnosticError(ResourceType, fmt.Sprintf("Error searching languageunderstanding miners %s | error: %s", name, err), resp))
 		}
 
 		if retryable {
-			return retry.RetryableError(util.BuildWithRetriesApiDiagnosticError(resourceName, fmt.Sprintf("No languageunderstanding miners found with name %s", name), resp))
+			return retry.RetryableError(util.BuildWithRetriesApiDiagnosticError(ResourceType, fmt.Sprintf("No languageunderstanding miners found with name %s", name), resp))
 		}
 
 		d.SetId(minerId)
