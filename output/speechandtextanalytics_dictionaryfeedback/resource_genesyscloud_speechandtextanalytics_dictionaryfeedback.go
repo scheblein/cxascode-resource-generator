@@ -31,11 +31,11 @@ func getAllAuthSpeechandtextanalyticsDictionaryfeedbacks(ctx context.Context, cl
 
 	dictionaryFeedbacks, resp, err := proxy.getAllSpeechandtextanalyticsDictionaryfeedback(ctx)
 	if err != nil {
-		return nil, util.BuildAPIDiagnosticError(resourceName, fmt.Sprintf("Failed to get speechandtextanalytics dictionaryfeedback: %v", err), resp)
+		return nil, util.BuildAPIDiagnosticError(ResourceType, fmt.Sprintf("Failed to get speechandtextanalytics dictionaryfeedback: %v", err), resp)
 	}
 
 	for _, dictionaryFeedback := range *dictionaryFeedbacks {
-		resources[*dictionaryFeedback.Id] = &resourceExporter.ResourceMeta{Name: *dictionaryFeedback.Name}
+		resources[*dictionaryFeedback.Id] = &resourceExporter.ResourceMeta{BlockLabel: *dictionaryFeedback.Name}
 	}
 
 	return resources, nil
@@ -51,7 +51,7 @@ func createSpeechandtextanalyticsDictionaryfeedback(ctx context.Context, d *sche
 	log.Printf("Creating speechandtextanalytics dictionaryfeedback %s", *speechandtextanalyticsDictionaryfeedback.Name)
 	dictionaryFeedback, resp, err := proxy.createSpeechandtextanalyticsDictionaryfeedback(ctx, &speechandtextanalyticsDictionaryfeedback)
 	if err != nil {
-		return util.BuildAPIDiagnosticError(resourceName, fmt.Sprintf("Failed to create speechandtextanalytics dictionaryfeedback: %s", err), resp)
+		return util.BuildAPIDiagnosticError(ResourceType, fmt.Sprintf("Failed to create speechandtextanalytics dictionaryfeedback: %s", err), resp)
 	}
 
 	d.SetId(*dictionaryFeedback.Id)
@@ -63,7 +63,7 @@ func createSpeechandtextanalyticsDictionaryfeedback(ctx context.Context, d *sche
 func readSpeechandtextanalyticsDictionaryfeedback(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	sdkConfig := meta.(*provider.ProviderMeta).ClientConfig
 	proxy := getSpeechandtextanalyticsDictionaryfeedbackProxy(sdkConfig)
-	cc := consistency_checker.NewConsistencyCheck(ctx, d, meta, ResourceSpeechandtextanalyticsDictionaryfeedback(), constants.DefaultConsistencyChecks, resourceName)
+	cc := consistency_checker.NewConsistencyCheck(ctx, d, meta, ResourceSpeechandtextanalyticsDictionaryfeedback(), constants.ConsistencyChecks(), resourceName)
 
 	log.Printf("Reading speechandtextanalytics dictionaryfeedback %s", d.Id())
 
@@ -71,9 +71,9 @@ func readSpeechandtextanalyticsDictionaryfeedback(ctx context.Context, d *schema
 		dictionaryFeedback, resp, getErr := proxy.getSpeechandtextanalyticsDictionaryfeedbackById(ctx, d.Id())
 		if getErr != nil {
 			if util.IsStatus404(resp) {
-				return retry.RetryableError(util.BuildWithRetriesApiDiagnosticError(resourceName, fmt.Sprintf("Failed to read speechandtextanalytics dictionaryfeedback %s: %s", d.Id(), getErr), resp))
+				return retry.RetryableError(util.BuildWithRetriesApiDiagnosticError(ResourceType, fmt.Sprintf("Failed to read speechandtextanalytics dictionaryfeedback %s: %s", d.Id(), getErr), resp))
 			}
-			return retry.NonRetryableError(util.BuildWithRetriesApiDiagnosticError(resourceName, fmt.Sprintf("Failed to read speechandtextanalytics dictionaryfeedback %s: %s", d.Id(), getErr), resp))
+			return retry.NonRetryableError(util.BuildWithRetriesApiDiagnosticError(ResourceType, fmt.Sprintf("Failed to read speechandtextanalytics dictionaryfeedback %s: %s", d.Id(), getErr), resp))
 		}
 
 		resourcedata.SetNillableValue(d, "term", dictionaryFeedback.Term)
@@ -98,7 +98,7 @@ func updateSpeechandtextanalyticsDictionaryfeedback(ctx context.Context, d *sche
 	log.Printf("Updating speechandtextanalytics dictionaryfeedback %s", *speechandtextanalyticsDictionaryfeedback.Name)
 	dictionaryFeedback, resp, err := proxy.updateSpeechandtextanalyticsDictionaryfeedback(ctx, d.Id(), &speechandtextanalyticsDictionaryfeedback)
 	if err != nil {
-		return util.BuildAPIDiagnosticError(resourceName, fmt.Sprintf("Failed to update speechandtextanalytics dictionaryfeedback %s: %s", d.Id(), err), resp)
+		return util.BuildAPIDiagnosticError(ResourceType, fmt.Sprintf("Failed to update speechandtextanalytics dictionaryfeedback %s: %s", d.Id(), err), resp)
 	}
 
 	log.Printf("Updated speechandtextanalytics dictionaryfeedback %s", *dictionaryFeedback.Id)
@@ -112,7 +112,7 @@ func deleteSpeechandtextanalyticsDictionaryfeedback(ctx context.Context, d *sche
 
 	resp, err := proxy.deleteSpeechandtextanalyticsDictionaryfeedback(ctx, d.Id())
 	if err != nil {
-		return util.BuildAPIDiagnosticError(resourceName, fmt.Sprintf("Failed to delete speechandtextanalytics dictionaryfeedback %s: %s", d.Id(), err), resp)
+		return util.BuildAPIDiagnosticError(ResourceType, fmt.Sprintf("Failed to delete speechandtextanalytics dictionaryfeedback %s: %s", d.Id(), err), resp)
 	}
 
 	return util.WithRetries(ctx, 180*time.Second, func() *retry.RetryError {
@@ -123,9 +123,9 @@ func deleteSpeechandtextanalyticsDictionaryfeedback(ctx context.Context, d *sche
 				log.Printf("Deleted speechandtextanalytics dictionaryfeedback %s", d.Id())
 				return nil
 			}
-			return retry.NonRetryableError(util.BuildWithRetriesApiDiagnosticError(resourceName, fmt.Sprintf("Error deleting speechandtextanalytics dictionaryfeedback %s: %s", d.Id(), err), resp))
+			return retry.NonRetryableError(util.BuildWithRetriesApiDiagnosticError(ResourceType, fmt.Sprintf("Error deleting speechandtextanalytics dictionaryfeedback %s: %s", d.Id(), err), resp))
 		}
 
-		return retry.RetryableError(util.BuildWithRetriesApiDiagnosticError(resourceName, fmt.Sprintf("speechandtextanalytics dictionaryfeedback %s still exists", d.Id()), resp))
+		return retry.RetryableError(util.BuildWithRetriesApiDiagnosticError(ResourceType, fmt.Sprintf("speechandtextanalytics dictionaryfeedback %s still exists", d.Id()), resp))
 	})
 }
