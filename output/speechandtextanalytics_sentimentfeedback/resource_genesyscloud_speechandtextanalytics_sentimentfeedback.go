@@ -31,11 +31,11 @@ func getAllAuthSpeechandtextanalyticsSentimentfeedbacks(ctx context.Context, cli
 
 	sentimentFeedbacks, resp, err := proxy.getAllSpeechandtextanalyticsSentimentfeedback(ctx)
 	if err != nil {
-		return nil, util.BuildAPIDiagnosticError(resourceName, fmt.Sprintf("Failed to get speechandtextanalytics sentimentfeedback: %v", err), resp)
+		return nil, util.BuildAPIDiagnosticError(ResourceType, fmt.Sprintf("Failed to get speechandtextanalytics sentimentfeedback: %v", err), resp)
 	}
 
 	for _, sentimentFeedback := range *sentimentFeedbacks {
-		resources[*sentimentFeedback.Id] = &resourceExporter.ResourceMeta{Name: *sentimentFeedback.Name}
+		resources[*sentimentFeedback.Id] = &resourceExporter.ResourceMeta{BlockLabel: *sentimentFeedback.Name}
 	}
 
 	return resources, nil
@@ -51,7 +51,7 @@ func createSpeechandtextanalyticsSentimentfeedback(ctx context.Context, d *schem
 	log.Printf("Creating speechandtextanalytics sentimentfeedback %s", *speechandtextanalyticsSentimentfeedback.Name)
 	sentimentFeedback, resp, err := proxy.createSpeechandtextanalyticsSentimentfeedback(ctx, &speechandtextanalyticsSentimentfeedback)
 	if err != nil {
-		return util.BuildAPIDiagnosticError(resourceName, fmt.Sprintf("Failed to create speechandtextanalytics sentimentfeedback: %s", err), resp)
+		return util.BuildAPIDiagnosticError(ResourceType, fmt.Sprintf("Failed to create speechandtextanalytics sentimentfeedback: %s", err), resp)
 	}
 
 	d.SetId(*sentimentFeedback.Id)
@@ -76,7 +76,7 @@ func deleteSpeechandtextanalyticsSentimentfeedback(ctx context.Context, d *schem
 
 	resp, err := proxy.deleteSpeechandtextanalyticsSentimentfeedback(ctx, d.Id())
 	if err != nil {
-		return util.BuildAPIDiagnosticError(resourceName, fmt.Sprintf("Failed to delete speechandtextanalytics sentimentfeedback %s: %s", d.Id(), err), resp)
+		return util.BuildAPIDiagnosticError(ResourceType, fmt.Sprintf("Failed to delete speechandtextanalytics sentimentfeedback %s: %s", d.Id(), err), resp)
 	}
 
 	return util.WithRetries(ctx, 180*time.Second, func() *retry.RetryError {
@@ -87,10 +87,10 @@ func deleteSpeechandtextanalyticsSentimentfeedback(ctx context.Context, d *schem
 				log.Printf("Deleted speechandtextanalytics sentimentfeedback %s", d.Id())
 				return nil
 			}
-			return retry.NonRetryableError(util.BuildWithRetriesApiDiagnosticError(resourceName, fmt.Sprintf("Error deleting speechandtextanalytics sentimentfeedback %s: %s", d.Id(), err), resp))
+			return retry.NonRetryableError(util.BuildWithRetriesApiDiagnosticError(ResourceType, fmt.Sprintf("Error deleting speechandtextanalytics sentimentfeedback %s: %s", d.Id(), err), resp))
 		}
 
-		return retry.RetryableError(util.BuildWithRetriesApiDiagnosticError(resourceName, fmt.Sprintf("speechandtextanalytics sentimentfeedback %s still exists", d.Id()), resp))
+		return retry.RetryableError(util.BuildWithRetriesApiDiagnosticError(ResourceType, fmt.Sprintf("speechandtextanalytics sentimentfeedback %s still exists", d.Id()), resp))
 	})
 }
 

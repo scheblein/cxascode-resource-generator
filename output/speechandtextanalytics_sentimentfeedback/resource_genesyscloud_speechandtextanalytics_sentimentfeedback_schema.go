@@ -20,9 +20,9 @@ const resourceName = "genesyscloud_speechandtextanalytics_sentimentfeedback"
 
 // SetRegistrar registers all of the resources, datasources and exporters in the package
 func SetRegistrar(regInstance registrar.Registrar) {
-	regInstance.RegisterResource(resourceName, ResourceSpeechandtextanalyticsSentimentfeedback())
-	regInstance.RegisterDataSource(resourceName, DataSourceSpeechandtextanalyticsSentimentfeedback())
-	regInstance.RegisterExporter(resourceName, SpeechandtextanalyticsSentimentfeedbackExporter())
+	regInstance.RegisterResource(ResourceType, ResourceSpeechandtextanalyticsSentimentfeedback())
+	regInstance.RegisterDataSource(ResourceType, DataSourceSpeechandtextanalyticsSentimentfeedback())
+	regInstance.RegisterExporter(ResourceType, SpeechandtextanalyticsSentimentfeedbackExporter())
 }
 
 // ResourceSpeechandtextanalyticsSentimentfeedback registers the genesyscloud_speechandtextanalytics_sentimentfeedback resource with Terraform
