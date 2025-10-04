@@ -1,0 +1,59 @@
+{
+  "name": "speechTextAnalyticsSettingsResponse",
+  "packageName": "speechandtextanalyticsSettings",
+  "properties": [
+    {
+      "name": "defaultProgram",
+      "type": "object",
+      "description": "Setting to choose name for the default program for topic detection",
+      "required": false,
+      "isStringArray": false,
+      "isReference": false,
+      "flattenFunction": "flattenAddressableEntityRef",
+      "buildFunction": "buildAddressableEntityRef",
+      "tfSchemaData": {
+        "type": "schema.TypeList",
+        "maxItems": 1,
+        "element": "addressableEntityRefResource"
+      },
+      "nestedObject": {
+        "name": "addressableEntityRef",
+        "properties": []
+      }
+    },
+    {
+      "name": "expectedDialects",
+      "type": "array",
+      "description": "Setting to choose expected dialects",
+      "required": false,
+      "isStringArray": true,
+      "isReference": false,
+      "tfSchemaData": {
+        "type": "schema.TypeList",
+        "element": "&schema.Schema{Type: schema.TypeString}"
+      }
+    },
+    {
+      "name": "textAnalyticsEnabled",
+      "type": "boolean",
+      "description": "Setting to enable/disable text analytics",
+      "required": false,
+      "isStringArray": false,
+      "isReference": false,
+      "tfSchemaData": {
+        "type": "schema.TypeBool"
+      }
+    },
+    {
+      "name": "agentEmpathyEnabled",
+      "type": "boolean",
+      "description": "Setting to enable/disable Agent Empathy setting",
+      "required": false,
+      "isStringArray": false,
+      "isReference": false,
+      "tfSchemaData": {
+        "type": "schema.TypeBool"
+      }
+    }
+  ]
+}
