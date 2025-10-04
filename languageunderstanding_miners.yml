@@ -1,0 +1,22 @@
+package: languageunderstanding_miners
+mainObject: Miner
+operations:
+  - type: create
+    method: POST
+    path: /api/v2/languageunderstanding/miners
+    link: https://developer.genesys.cloud/devapps/api-explorer#post-api-v2-languageunderstanding-miners
+  - type: read
+    method: GET
+    path: /api/v2/languageunderstanding/miners/{minerId}
+    link: https://developer.genesys.cloud/devapps/api-explorer#get-api-v2-languageunderstanding-miners--minerId-
+  - type: delete
+    method: DELETE
+    path: /api/v2/languageunderstanding/miners/{minerId}
+    link: https://developer.genesys.cloud/devapps/api-explorer#delete-api-v2-languageunderstanding-miners--minerId-
+  - type: getAll
+    method: GET
+    path: /api/v2/languageunderstanding/miners
+    link: https://developer.genesys.cloud/devapps/api-explorer#get-api-v2-languageunderstanding-miners
+testFiles: true
+initTest: true
+documentation: true

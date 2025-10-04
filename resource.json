@@ -1,0 +1,718 @@
+{
+  "name": "miner",
+  "packageName": "languageunderstandingMiners",
+  "properties": [
+    {
+      "name": "name",
+      "type": "string",
+      "description": "Chat Corpus Name.",
+      "required": true,
+      "isStringArray": false,
+      "isReference": false,
+      "tfSchemaData": {
+        "type": "schema.TypeString"
+      }
+    },
+    {
+      "name": "language",
+      "type": "string",
+      "description": "Language Localization code.",
+      "required": false,
+      "isStringArray": false,
+      "isReference": false,
+      "tfSchemaData": {
+        "type": "schema.TypeString"
+      }
+    },
+    {
+      "name": "minerType",
+      "type": "string",
+      "description": "Type of the miner, intent or topic.",
+      "required": false,
+      "isStringArray": false,
+      "isReference": false,
+      "tfSchemaData": {
+        "type": "schema.TypeString"
+      }
+    },
+    {
+      "name": "seeding",
+      "type": "boolean",
+      "description": "Flag to indicate whether seeding is supported for this miner.",
+      "required": false,
+      "isStringArray": false,
+      "isReference": false,
+      "tfSchemaData": {
+        "type": "schema.TypeBool"
+      }
+    },
+    {
+      "name": "status",
+      "type": "string",
+      "description": "Status of the miner.",
+      "required": false,
+      "isStringArray": false,
+      "isReference": false,
+      "tfSchemaData": {
+        "type": "schema.TypeString"
+      }
+    },
+    {
+      "name": "conversationsDateRangeStart",
+      "type": "string",
+      "description": "Date from which the conversations need to be taken for mining. Dates are represented as an ISO-8601 string. For example: yyyy-MM-dd",
+      "required": false,
+      "isStringArray": false,
+      "isReference": false,
+      "tfSchemaData": {
+        "type": "schema.TypeString"
+      }
+    },
+    {
+      "name": "conversationsDateRangeEnd",
+      "type": "string",
+      "description": "Date till which the conversations need to be taken for mining. Dates are represented as an ISO-8601 string. For example: yyyy-MM-dd",
+      "required": false,
+      "isStringArray": false,
+      "isReference": false,
+      "tfSchemaData": {
+        "type": "schema.TypeString"
+      }
+    },
+    {
+      "name": "dateCompleted",
+      "type": "string",
+      "description": "Date when the mining process was completed. Date time is represented as an ISO-8601 string. For example: yyyy-MM-ddTHH:mm:ss[.mmm]Z",
+      "required": false,
+      "isStringArray": false,
+      "isReference": false,
+      "tfSchemaData": {
+        "type": "schema.TypeString"
+      }
+    },
+    {
+      "name": "message",
+      "type": "string",
+      "description": "Mining message if present.",
+      "required": false,
+      "isStringArray": false,
+      "isReference": false,
+      "tfSchemaData": {
+        "type": "schema.TypeString"
+      }
+    },
+    {
+      "name": "errorInfo",
+      "type": "object",
+      "description": "Error Information",
+      "required": false,
+      "isStringArray": false,
+      "isReference": false,
+      "flattenFunction": "flattenMinerErrorInfo",
+      "buildFunction": "buildMinerErrorInfo",
+      "tfSchemaData": {
+        "type": "schema.TypeList",
+        "maxItems": 1,
+        "element": "minerErrorInfoResource"
+      },
+      "nestedObject": {
+        "name": "minerErrorInfo",
+        "properties": [
+          {
+            "name": "message",
+            "type": "string",
+            "description": "",
+            "required": false,
+            "isStringArray": false,
+            "isReference": false,
+            "tfSchemaData": {
+              "type": "schema.TypeString"
+            }
+          },
+          {
+            "name": "code",
+            "type": "string",
+            "description": "",
+            "required": false,
+            "isStringArray": false,
+            "isReference": false,
+            "tfSchemaData": {
+              "type": "schema.TypeString"
+            }
+          },
+          {
+            "name": "messageWithParams",
+            "type": "string",
+            "description": "Error message with params included.",
+            "required": false,
+            "isStringArray": false,
+            "isReference": false,
+            "tfSchemaData": {
+              "type": "schema.TypeString"
+            }
+          },
+          {
+            "name": "messageParams",
+            "type": "unknown",
+            "description": "Map of variables and params for the error message.",
+            "required": false,
+            "isStringArray": false,
+            "isReference": false,
+            "tfSchemaData": {}
+          }
+        ]
+      }
+    },
+    {
+      "name": "warningInfo",
+      "type": "object",
+      "description": "Warning Information",
+      "required": false,
+      "isStringArray": false,
+      "isReference": false,
+      "flattenFunction": "flattenMinerErrorInfo",
+      "buildFunction": "buildMinerErrorInfo",
+      "tfSchemaData": {
+        "type": "schema.TypeList",
+        "maxItems": 1,
+        "element": "minerErrorInfoResource"
+      },
+      "nestedObject": {
+        "name": "minerErrorInfo",
+        "properties": []
+      }
+    },
+    {
+      "name": "conversationDataUploaded",
+      "type": "boolean",
+      "description": "Flag to indicate whether data file to be mined was uploaded.",
+      "required": false,
+      "isStringArray": false,
+      "isReference": false,
+      "tfSchemaData": {
+        "type": "schema.TypeBool"
+      }
+    },
+    {
+      "name": "mediaType",
+      "type": "string",
+      "description": "Media type for filtering conversations.",
+      "required": false,
+      "isStringArray": false,
+      "isReference": false,
+      "tfSchemaData": {
+        "type": "schema.TypeString"
+      }
+    },
+    {
+      "name": "participantType",
+      "type": "string",
+      "description": "Type of the participant, either agent, customer or both.",
+      "required": false,
+      "isStringArray": false,
+      "isReference": false,
+      "tfSchemaData": {
+        "type": "schema.TypeString"
+      }
+    },
+    {
+      "name": "queueIds",
+      "type": "array",
+      "description": "List of queue IDs for filtering conversations.",
+      "required": false,
+      "isStringArray": true,
+      "isReference": false,
+      "tfSchemaData": {
+        "type": "schema.TypeList",
+        "element": "&schema.Schema{Type: schema.TypeString}"
+      }
+    },
+    {
+      "name": "dateTriggered",
+      "type": "string",
+      "description": "Date when the miner started execution. Date time is represented as an ISO-8601 string. For example: yyyy-MM-ddTHH:mm:ss[.mmm]Z",
+      "required": false,
+      "isStringArray": false,
+      "isReference": false,
+      "tfSchemaData": {
+        "type": "schema.TypeString"
+      }
+    },
+    {
+      "name": "latestDraftVersion",
+      "type": "object",
+      "description": "Latest draft details of the miner.",
+      "required": false,
+      "isStringArray": false,
+      "isReference": false,
+      "flattenFunction": "flattenDraft",
+      "buildFunction": "buildDraft",
+      "tfSchemaData": {
+        "type": "schema.TypeList",
+        "maxItems": 1,
+        "element": "draftResource"
+      },
+      "nestedObject": {
+        "name": "draft",
+        "properties": [
+          {
+            "name": "name",
+            "type": "string",
+            "description": "Draft name",
+            "required": true,
+            "isStringArray": false,
+            "isReference": false,
+            "tfSchemaData": {
+              "type": "schema.TypeString"
+            }
+          },
+          {
+            "name": "miner",
+            "type": "object",
+            "description": "Miner to which the draft belongs.",
+            "required": false,
+            "isStringArray": false,
+            "isReference": false,
+            "flattenFunction": "flattenMiner",
+            "buildFunction": "buildMiner",
+            "tfSchemaData": {
+              "type": "schema.TypeList",
+              "maxItems": 1,
+              "element": "minerResource"
+            },
+            "nestedObject": {
+              "name": "miner",
+              "properties": [
+                {
+                  "name": "name",
+                  "type": "string",
+                  "description": "Chat Corpus Name.",
+                  "required": true,
+                  "isStringArray": false,
+                  "isReference": false,
+                  "tfSchemaData": {
+                    "type": "schema.TypeString"
+                  }
+                },
+                {
+                  "name": "language",
+                  "type": "string",
+                  "description": "Language Localization code.",
+                  "required": false,
+                  "isStringArray": false,
+                  "isReference": false,
+                  "tfSchemaData": {
+                    "type": "schema.TypeString"
+                  }
+                },
+                {
+                  "name": "minerType",
+                  "type": "string",
+                  "description": "Type of the miner, intent or topic.",
+                  "required": false,
+                  "isStringArray": false,
+                  "isReference": false,
+                  "tfSchemaData": {
+                    "type": "schema.TypeString"
+                  }
+                },
+                {
+                  "name": "seeding",
+                  "type": "boolean",
+                  "description": "Flag to indicate whether seeding is supported for this miner.",
+                  "required": false,
+                  "isStringArray": false,
+                  "isReference": false,
+                  "tfSchemaData": {
+                    "type": "schema.TypeBool"
+                  }
+                },
+                {
+                  "name": "status",
+                  "type": "string",
+                  "description": "Status of the miner.",
+                  "required": false,
+                  "isStringArray": false,
+                  "isReference": false,
+                  "tfSchemaData": {
+                    "type": "schema.TypeString"
+                  }
+                },
+                {
+                  "name": "conversationsDateRangeStart",
+                  "type": "string",
+                  "description": "Date from which the conversations need to be taken for mining. Dates are represented as an ISO-8601 string. For example: yyyy-MM-dd",
+                  "required": false,
+                  "isStringArray": false,
+                  "isReference": false,
+                  "tfSchemaData": {
+                    "type": "schema.TypeString"
+                  }
+                },
+                {
+                  "name": "conversationsDateRangeEnd",
+                  "type": "string",
+                  "description": "Date till which the conversations need to be taken for mining. Dates are represented as an ISO-8601 string. For example: yyyy-MM-dd",
+                  "required": false,
+                  "isStringArray": false,
+                  "isReference": false,
+                  "tfSchemaData": {
+                    "type": "schema.TypeString"
+                  }
+                },
+                {
+                  "name": "dateCompleted",
+                  "type": "string",
+                  "description": "Date when the mining process was completed. Date time is represented as an ISO-8601 string. For example: yyyy-MM-ddTHH:mm:ss[.mmm]Z",
+                  "required": false,
+                  "isStringArray": false,
+                  "isReference": false,
+                  "tfSchemaData": {
+                    "type": "schema.TypeString"
+                  }
+                },
+                {
+                  "name": "message",
+                  "type": "string",
+                  "description": "Mining message if present.",
+                  "required": false,
+                  "isStringArray": false,
+                  "isReference": false,
+                  "tfSchemaData": {
+                    "type": "schema.TypeString"
+                  }
+                },
+                {
+                  "name": "errorInfo",
+                  "type": "object",
+                  "description": "Error Information",
+                  "required": false,
+                  "isStringArray": false,
+                  "isReference": false,
+                  "flattenFunction": "flattenMinerErrorInfo",
+                  "buildFunction": "buildMinerErrorInfo",
+                  "tfSchemaData": {
+                    "type": "schema.TypeList",
+                    "maxItems": 1,
+                    "element": "minerErrorInfoResource"
+                  },
+                  "nestedObject": {
+                    "name": "minerErrorInfo",
+                    "properties": []
+                  }
+                },
+                {
+                  "name": "warningInfo",
+                  "type": "object",
+                  "description": "Warning Information",
+                  "required": false,
+                  "isStringArray": false,
+                  "isReference": false,
+                  "flattenFunction": "flattenMinerErrorInfo",
+                  "buildFunction": "buildMinerErrorInfo",
+                  "tfSchemaData": {
+                    "type": "schema.TypeList",
+                    "maxItems": 1,
+                    "element": "minerErrorInfoResource"
+                  },
+                  "nestedObject": {
+                    "name": "minerErrorInfo",
+                    "properties": []
+                  }
+                },
+                {
+                  "name": "conversationDataUploaded",
+                  "type": "boolean",
+                  "description": "Flag to indicate whether data file to be mined was uploaded.",
+                  "required": false,
+                  "isStringArray": false,
+                  "isReference": false,
+                  "tfSchemaData": {
+                    "type": "schema.TypeBool"
+                  }
+                },
+                {
+                  "name": "mediaType",
+                  "type": "string",
+                  "description": "Media type for filtering conversations.",
+                  "required": false,
+                  "isStringArray": false,
+                  "isReference": false,
+                  "tfSchemaData": {
+                    "type": "schema.TypeString"
+                  }
+                },
+                {
+                  "name": "participantType",
+                  "type": "string",
+                  "description": "Type of the participant, either agent, customer or both.",
+                  "required": false,
+                  "isStringArray": false,
+                  "isReference": false,
+                  "tfSchemaData": {
+                    "type": "schema.TypeString"
+                  }
+                },
+                {
+                  "name": "queueIds",
+                  "type": "array",
+                  "description": "List of queue IDs for filtering conversations.",
+                  "required": false,
+                  "isStringArray": true,
+                  "isReference": false,
+                  "tfSchemaData": {
+                    "type": "schema.TypeList",
+                    "element": "&schema.Schema{Type: schema.TypeString}"
+                  }
+                },
+                {
+                  "name": "dateTriggered",
+                  "type": "string",
+                  "description": "Date when the miner started execution. Date time is represented as an ISO-8601 string. For example: yyyy-MM-ddTHH:mm:ss[.mmm]Z",
+                  "required": false,
+                  "isStringArray": false,
+                  "isReference": false,
+                  "tfSchemaData": {
+                    "type": "schema.TypeString"
+                  }
+                },
+                {
+                  "name": "latestDraftVersion",
+                  "type": "object",
+                  "description": "Latest draft details of the miner.",
+                  "required": false,
+                  "isStringArray": false,
+                  "isReference": false,
+                  "flattenFunction": "flattenDraft",
+                  "buildFunction": "buildDraft",
+                  "tfSchemaData": {
+                    "type": "schema.TypeList",
+                    "maxItems": 1,
+                    "element": "draftResource"
+                  },
+                  "nestedObject": {
+                    "name": "draft",
+                    "properties": []
+                  }
+                },
+                {
+                  "name": "conversationsFetchedCount",
+                  "type": "integer",
+                  "description": "Number of conversations/transcripts fetched.",
+                  "required": false,
+                  "isStringArray": false,
+                  "isReference": false,
+                  "tfSchemaData": {
+                    "type": "schema.TypeInt"
+                  }
+                },
+                {
+                  "name": "conversationsValidCount",
+                  "type": "integer",
+                  "description": "Number of conversations/recordings/transcripts that were found valid for mining purposes.",
+                  "required": false,
+                  "isStringArray": false,
+                  "isReference": false,
+                  "tfSchemaData": {
+                    "type": "schema.TypeInt"
+                  }
+                },
+                {
+                  "name": "getminedItemCount",
+                  "type": "integer",
+                  "description": "Number of intents or topics based on the miner type.",
+                  "required": false,
+                  "isStringArray": false,
+                  "isReference": false,
+                  "tfSchemaData": {
+                    "type": "schema.TypeInt"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "intents",
+            "type": "array",
+            "description": "Draft intent object.",
+            "required": false,
+            "isStringArray": false,
+            "isReference": false,
+            "flattenFunction": "flattenDraftIntentss",
+            "buildFunction": "buildDraftIntentss",
+            "tfSchemaData": {
+              "type": "schema.TypeList",
+              "element": "draftIntentsResource"
+            },
+            "nestedObject": {
+              "name": "draftIntents",
+              "properties": [
+                {
+                  "name": "name",
+                  "type": "string",
+                  "description": "Name/Label for an intent.",
+                  "required": true,
+                  "isStringArray": false,
+                  "isReference": false,
+                  "tfSchemaData": {
+                    "type": "schema.TypeString"
+                  }
+                },
+                {
+                  "name": "utterances",
+                  "type": "array",
+                  "description": "The utterances that are extracted for an Intent.",
+                  "required": true,
+                  "isStringArray": true,
+                  "isReference": false,
+                  "tfSchemaData": {
+                    "type": "schema.TypeList",
+                    "element": "&schema.Schema{Type: schema.TypeString}"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "topics",
+            "type": "array",
+            "description": "Draft topic object.",
+            "required": false,
+            "isStringArray": false,
+            "isReference": false,
+            "flattenFunction": "flattenDraftTopicss",
+            "buildFunction": "buildDraftTopicss",
+            "tfSchemaData": {
+              "type": "schema.TypeList",
+              "element": "draftTopicsResource"
+            },
+            "nestedObject": {
+              "name": "draftTopics",
+              "properties": [
+                {
+                  "name": "name",
+                  "type": "string",
+                  "description": "Topic name.",
+                  "required": false,
+                  "isStringArray": false,
+                  "isReference": false,
+                  "tfSchemaData": {
+                    "type": "schema.TypeString"
+                  }
+                },
+                {
+                  "name": "miner",
+                  "type": "object",
+                  "description": "The miner to which the topic belongs.",
+                  "required": false,
+                  "isStringArray": false,
+                  "isReference": false,
+                  "flattenFunction": "flattenMiner",
+                  "buildFunction": "buildMiner",
+                  "tfSchemaData": {
+                    "type": "schema.TypeList",
+                    "maxItems": 1,
+                    "element": "minerResource"
+                  },
+                  "nestedObject": {
+                    "name": "miner",
+                    "properties": []
+                  }
+                },
+                {
+                  "name": "conversationCount",
+                  "type": "integer",
+                  "description": "Number of conversations where a topic has occurred.",
+                  "required": false,
+                  "isStringArray": false,
+                  "isReference": false,
+                  "tfSchemaData": {
+                    "type": "schema.TypeInt"
+                  }
+                },
+                {
+                  "name": "conversationPercent",
+                  "type": "number",
+                  "description": "Percentage of conversations where a topic has occurred.",
+                  "required": false,
+                  "isStringArray": false,
+                  "isReference": false,
+                  "tfSchemaData": {
+                    "type": "schema.TypeFloat"
+                  }
+                },
+                {
+                  "name": "utteranceCount",
+                  "type": "integer",
+                  "description": "Number of unique utterances where a topic has occurred.",
+                  "required": false,
+                  "isStringArray": false,
+                  "isReference": false,
+                  "tfSchemaData": {
+                    "type": "schema.TypeInt"
+                  }
+                },
+                {
+                  "name": "phraseCount",
+                  "type": "integer",
+                  "description": "Number of unique phrases (sub-utterances) where a topic has occurred.",
+                  "required": false,
+                  "isStringArray": false,
+                  "isReference": false,
+                  "tfSchemaData": {
+                    "type": "schema.TypeInt"
+                  }
+                },
+                {
+                  "name": "phrases",
+                  "type": "array",
+                  "description": "The phrases that are extracted for a topic.",
+                  "required": true,
+                  "isStringArray": true,
+                  "isReference": false,
+                  "tfSchemaData": {
+                    "type": "schema.TypeList",
+                    "element": "&schema.Schema{Type: schema.TypeString}"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "conversationsFetchedCount",
+      "type": "integer",
+      "description": "Number of conversations/transcripts fetched.",
+      "required": false,
+      "isStringArray": false,
+      "isReference": false,
+      "tfSchemaData": {
+        "type": "schema.TypeInt"
+      }
+    },
+    {
+      "name": "conversationsValidCount",
+      "type": "integer",
+      "description": "Number of conversations/recordings/transcripts that were found valid for mining purposes.",
+      "required": false,
+      "isStringArray": false,
+      "isReference": false,
+      "tfSchemaData": {
+        "type": "schema.TypeInt"
+      }
+    },
+    {
+      "name": "getminedItemCount",
+      "type": "integer",
+      "description": "Number of intents or topics based on the miner type.",
+      "required": false,
+      "isStringArray": false,
+      "isReference": false,
+      "tfSchemaData": {
+        "type": "schema.TypeInt"
+      }
+    }
+  ]
+}
