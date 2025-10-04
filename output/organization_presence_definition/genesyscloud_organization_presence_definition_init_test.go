@@ -28,7 +28,7 @@ func (r *registerTestInstance) registerTestResources() {
 	r.resourceMapMutex.Lock()
 	defer r.resourceMapMutex.Unlock()
 
-	providerResources[resourceName] = ResourceOrganizationPresenceDefinition()
+	providerResources[ResourceType] = ResourceOrganizationPresenceDefinition()
 	// TODO: Add references
 }
 
@@ -37,7 +37,7 @@ func (r *registerTestInstance) registerTestDataSources() {
 	r.datasourceMapMutex.Lock()
 	defer r.datasourceMapMutex.Unlock()
 
-	providerDataSources[resourceName] = DataSourceOrganizationPresenceDefinition()
+	providerDataSources[ResourceType] = DataSourceOrganizationPresenceDefinition()
 	// TODO: Add references
 }
 

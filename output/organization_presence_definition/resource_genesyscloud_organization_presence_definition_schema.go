@@ -20,9 +20,9 @@ const resourceName = "genesyscloud_organization_presence_definition"
 
 // SetRegistrar registers all of the resources, datasources and exporters in the package
 func SetRegistrar(regInstance registrar.Registrar) {
-	regInstance.RegisterResource(resourceName, ResourceOrganizationPresenceDefinition())
-	regInstance.RegisterDataSource(resourceName, DataSourceOrganizationPresenceDefinition())
-	regInstance.RegisterExporter(resourceName, OrganizationPresenceDefinitionExporter())
+	regInstance.RegisterResource(ResourceType, ResourceOrganizationPresenceDefinition())
+	regInstance.RegisterDataSource(ResourceType, DataSourceOrganizationPresenceDefinition())
+	regInstance.RegisterExporter(ResourceType, OrganizationPresenceDefinitionExporter())
 }
 
 // ResourceOrganizationPresenceDefinition registers the genesyscloud_organization_presence_definition resource with Terraform

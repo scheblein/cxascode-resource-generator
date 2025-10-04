@@ -31,11 +31,11 @@ func getAllAuthOrganizationPresenceDefinitions(ctx context.Context, clientConfig
 
 	organizationPresenceDefinitions, resp, err := proxy.getAllOrganizationPresenceDefinition(ctx)
 	if err != nil {
-		return nil, util.BuildAPIDiagnosticError(resourceName, fmt.Sprintf("Failed to get organization presence definition: %v", err), resp)
+		return nil, util.BuildAPIDiagnosticError(ResourceType, fmt.Sprintf("Failed to get organization presence definition: %v", err), resp)
 	}
 
 	for _, organizationPresenceDefinition := range *organizationPresenceDefinitions {
-		resources[*organizationPresenceDefinition.Id] = &resourceExporter.ResourceMeta{Name: *organizationPresenceDefinition.Name}
+		resources[*organizationPresenceDefinition.Id] = &resourceExporter.ResourceMeta{BlockLabel: *organizationPresenceDefinition.Name}
 	}
 
 	return resources, nil
@@ -51,7 +51,7 @@ func createOrganizationPresenceDefinition(ctx context.Context, d *schema.Resourc
 	log.Printf("Creating organization presence definition %s", *organizationPresenceDefinition.Name)
 	organizationPresenceDefinition, resp, err := proxy.createOrganizationPresenceDefinition(ctx, &organizationPresenceDefinition)
 	if err != nil {
-		return util.BuildAPIDiagnosticError(resourceName, fmt.Sprintf("Failed to create organization presence definition: %s", err), resp)
+		return util.BuildAPIDiagnosticError(ResourceType, fmt.Sprintf("Failed to create organization presence definition: %s", err), resp)
 	}
 
 	d.SetId(*organizationPresenceDefinition.Id)
@@ -63,7 +63,7 @@ func createOrganizationPresenceDefinition(ctx context.Context, d *schema.Resourc
 func readOrganizationPresenceDefinition(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	sdkConfig := meta.(*provider.ProviderMeta).ClientConfig
 	proxy := getOrganizationPresenceDefinitionProxy(sdkConfig)
-	cc := consistency_checker.NewConsistencyCheck(ctx, d, meta, ResourceOrganizationPresenceDefinition(), constants.DefaultConsistencyChecks, resourceName)
+	cc := consistency_checker.NewConsistencyCheck(ctx, d, meta, ResourceOrganizationPresenceDefinition(), constants.ConsistencyChecks(), resourceName)
 
 	log.Printf("Reading organization presence definition %s", d.Id())
 
@@ -71,9 +71,9 @@ func readOrganizationPresenceDefinition(ctx context.Context, d *schema.ResourceD
 		organizationPresenceDefinition, resp, getErr := proxy.getOrganizationPresenceDefinitionById(ctx, d.Id())
 		if getErr != nil {
 			if util.IsStatus404(resp) {
-				return retry.RetryableError(util.BuildWithRetriesApiDiagnosticError(resourceName, fmt.Sprintf("Failed to read organization presence definition %s: %s", d.Id(), getErr), resp))
+				return retry.RetryableError(util.BuildWithRetriesApiDiagnosticError(ResourceType, fmt.Sprintf("Failed to read organization presence definition %s: %s", d.Id(), getErr), resp))
 			}
-			return retry.NonRetryableError(util.BuildWithRetriesApiDiagnosticError(resourceName, fmt.Sprintf("Failed to read organization presence definition %s: %s", d.Id(), getErr), resp))
+			return retry.NonRetryableError(util.BuildWithRetriesApiDiagnosticError(ResourceType, fmt.Sprintf("Failed to read organization presence definition %s: %s", d.Id(), getErr), resp))
 		}
 
 		resourcedata.SetNillableValue(d, "name", organizationPresenceDefinition.Name)
@@ -97,7 +97,7 @@ func updateOrganizationPresenceDefinition(ctx context.Context, d *schema.Resourc
 	log.Printf("Updating organization presence definition %s", *organizationPresenceDefinition.Name)
 	organizationPresenceDefinition, resp, err := proxy.updateOrganizationPresenceDefinition(ctx, d.Id(), &organizationPresenceDefinition)
 	if err != nil {
-		return util.BuildAPIDiagnosticError(resourceName, fmt.Sprintf("Failed to update organization presence definition %s: %s", d.Id(), err), resp)
+		return util.BuildAPIDiagnosticError(ResourceType, fmt.Sprintf("Failed to update organization presence definition %s: %s", d.Id(), err), resp)
 	}
 
 	log.Printf("Updated organization presence definition %s", *organizationPresenceDefinition.Id)
@@ -111,7 +111,7 @@ func deleteOrganizationPresenceDefinition(ctx context.Context, d *schema.Resourc
 
 	resp, err := proxy.deleteOrganizationPresenceDefinition(ctx, d.Id())
 	if err != nil {
-		return util.BuildAPIDiagnosticError(resourceName, fmt.Sprintf("Failed to delete organization presence definition %s: %s", d.Id(), err), resp)
+		return util.BuildAPIDiagnosticError(ResourceType, fmt.Sprintf("Failed to delete organization presence definition %s: %s", d.Id(), err), resp)
 	}
 
 	return util.WithRetries(ctx, 180*time.Second, func() *retry.RetryError {
@@ -122,10 +122,10 @@ func deleteOrganizationPresenceDefinition(ctx context.Context, d *schema.Resourc
 				log.Printf("Deleted organization presence definition %s", d.Id())
 				return nil
 			}
-			return retry.NonRetryableError(util.BuildWithRetriesApiDiagnosticError(resourceName, fmt.Sprintf("Error deleting organization presence definition %s: %s", d.Id(), err), resp))
+			return retry.NonRetryableError(util.BuildWithRetriesApiDiagnosticError(ResourceType, fmt.Sprintf("Error deleting organization presence definition %s: %s", d.Id(), err), resp))
 		}
 
-		return retry.RetryableError(util.BuildWithRetriesApiDiagnosticError(resourceName, fmt.Sprintf("organization presence definition %s still exists", d.Id()), resp))
+		return retry.RetryableError(util.BuildWithRetriesApiDiagnosticError(ResourceType, fmt.Sprintf("organization presence definition %s still exists", d.Id()), resp))
 	})
 }
 
