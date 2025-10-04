@@ -28,7 +28,7 @@ func (r *registerTestInstance) registerTestResources() {
 	r.resourceMapMutex.Lock()
 	defer r.resourceMapMutex.Unlock()
 
-	providerResources[resourceName] = ResourceSpeechandtextanalyticsCategories()
+	providerResources[ResourceType] = ResourceSpeechandtextanalyticsCategories()
 	// TODO: Add references
 }
 
@@ -37,7 +37,7 @@ func (r *registerTestInstance) registerTestDataSources() {
 	r.datasourceMapMutex.Lock()
 	defer r.datasourceMapMutex.Unlock()
 
-	providerDataSources[resourceName] = DataSourceSpeechandtextanalyticsCategories()
+	providerDataSources[ResourceType] = DataSourceSpeechandtextanalyticsCategories()
 	// TODO: Add references
 }
 

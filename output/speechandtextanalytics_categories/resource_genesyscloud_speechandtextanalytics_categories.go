@@ -31,11 +31,11 @@ func getAllAuthSpeechandtextanalyticsCategoriess(ctx context.Context, clientConf
 
 	staCategorys, resp, err := proxy.getAllSpeechandtextanalyticsCategories(ctx)
 	if err != nil {
-		return nil, util.BuildAPIDiagnosticError(resourceName, fmt.Sprintf("Failed to get speechandtextanalytics categories: %v", err), resp)
+		return nil, util.BuildAPIDiagnosticError(ResourceType, fmt.Sprintf("Failed to get speechandtextanalytics categories: %v", err), resp)
 	}
 
 	for _, staCategory := range *staCategorys {
-		resources[*staCategory.Id] = &resourceExporter.ResourceMeta{Name: *staCategory.Name}
+		resources[*staCategory.Id] = &resourceExporter.ResourceMeta{BlockLabel: *staCategory.Name}
 	}
 
 	return resources, nil
@@ -51,7 +51,7 @@ func createSpeechandtextanalyticsCategories(ctx context.Context, d *schema.Resou
 	log.Printf("Creating speechandtextanalytics categories %s", *speechandtextanalyticsCategories.Name)
 	staCategory, resp, err := proxy.createSpeechandtextanalyticsCategories(ctx, &speechandtextanalyticsCategories)
 	if err != nil {
-		return util.BuildAPIDiagnosticError(resourceName, fmt.Sprintf("Failed to create speechandtextanalytics categories: %s", err), resp)
+		return util.BuildAPIDiagnosticError(ResourceType, fmt.Sprintf("Failed to create speechandtextanalytics categories: %s", err), resp)
 	}
 
 	d.SetId(*staCategory.Id)
@@ -63,7 +63,7 @@ func createSpeechandtextanalyticsCategories(ctx context.Context, d *schema.Resou
 func readSpeechandtextanalyticsCategories(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	sdkConfig := meta.(*provider.ProviderMeta).ClientConfig
 	proxy := getSpeechandtextanalyticsCategoriesProxy(sdkConfig)
-	cc := consistency_checker.NewConsistencyCheck(ctx, d, meta, ResourceSpeechandtextanalyticsCategories(), constants.DefaultConsistencyChecks, resourceName)
+	cc := consistency_checker.NewConsistencyCheck(ctx, d, meta, ResourceSpeechandtextanalyticsCategories(), constants.ConsistencyChecks(), resourceName)
 
 	log.Printf("Reading speechandtextanalytics categories %s", d.Id())
 
@@ -71,9 +71,9 @@ func readSpeechandtextanalyticsCategories(ctx context.Context, d *schema.Resourc
 		staCategory, resp, getErr := proxy.getSpeechandtextanalyticsCategoriesById(ctx, d.Id())
 		if getErr != nil {
 			if util.IsStatus404(resp) {
-				return retry.RetryableError(util.BuildWithRetriesApiDiagnosticError(resourceName, fmt.Sprintf("Failed to read speechandtextanalytics categories %s: %s", d.Id(), getErr), resp))
+				return retry.RetryableError(util.BuildWithRetriesApiDiagnosticError(ResourceType, fmt.Sprintf("Failed to read speechandtextanalytics categories %s: %s", d.Id(), getErr), resp))
 			}
-			return retry.NonRetryableError(util.BuildWithRetriesApiDiagnosticError(resourceName, fmt.Sprintf("Failed to read speechandtextanalytics categories %s: %s", d.Id(), getErr), resp))
+			return retry.NonRetryableError(util.BuildWithRetriesApiDiagnosticError(ResourceType, fmt.Sprintf("Failed to read speechandtextanalytics categories %s: %s", d.Id(), getErr), resp))
 		}
 
 		resourcedata.SetNillableValue(d, "name", staCategory.Name)
@@ -96,7 +96,7 @@ func updateSpeechandtextanalyticsCategories(ctx context.Context, d *schema.Resou
 	log.Printf("Updating speechandtextanalytics categories %s", *speechandtextanalyticsCategories.Name)
 	staCategory, resp, err := proxy.updateSpeechandtextanalyticsCategories(ctx, d.Id(), &speechandtextanalyticsCategories)
 	if err != nil {
-		return util.BuildAPIDiagnosticError(resourceName, fmt.Sprintf("Failed to update speechandtextanalytics categories %s: %s", d.Id(), err), resp)
+		return util.BuildAPIDiagnosticError(ResourceType, fmt.Sprintf("Failed to update speechandtextanalytics categories %s: %s", d.Id(), err), resp)
 	}
 
 	log.Printf("Updated speechandtextanalytics categories %s", *staCategory.Id)
@@ -110,7 +110,7 @@ func deleteSpeechandtextanalyticsCategories(ctx context.Context, d *schema.Resou
 
 	resp, err := proxy.deleteSpeechandtextanalyticsCategories(ctx, d.Id())
 	if err != nil {
-		return util.BuildAPIDiagnosticError(resourceName, fmt.Sprintf("Failed to delete speechandtextanalytics categories %s: %s", d.Id(), err), resp)
+		return util.BuildAPIDiagnosticError(ResourceType, fmt.Sprintf("Failed to delete speechandtextanalytics categories %s: %s", d.Id(), err), resp)
 	}
 
 	return util.WithRetries(ctx, 180*time.Second, func() *retry.RetryError {
@@ -121,9 +121,9 @@ func deleteSpeechandtextanalyticsCategories(ctx context.Context, d *schema.Resou
 				log.Printf("Deleted speechandtextanalytics categories %s", d.Id())
 				return nil
 			}
-			return retry.NonRetryableError(util.BuildWithRetriesApiDiagnosticError(resourceName, fmt.Sprintf("Error deleting speechandtextanalytics categories %s: %s", d.Id(), err), resp))
+			return retry.NonRetryableError(util.BuildWithRetriesApiDiagnosticError(ResourceType, fmt.Sprintf("Error deleting speechandtextanalytics categories %s: %s", d.Id(), err), resp))
 		}
 
-		return retry.RetryableError(util.BuildWithRetriesApiDiagnosticError(resourceName, fmt.Sprintf("speechandtextanalytics categories %s still exists", d.Id()), resp))
+		return retry.RetryableError(util.BuildWithRetriesApiDiagnosticError(ResourceType, fmt.Sprintf("speechandtextanalytics categories %s still exists", d.Id()), resp))
 	})
 }
