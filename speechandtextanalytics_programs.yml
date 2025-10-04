@@ -1,0 +1,26 @@
+package: speechandtextanalytics_Programs
+mainObject: Program
+operations:
+  - type: create
+    method: POST
+    path: /api/v2/speechandtextanalytics/programs
+    link: https://developer.genesys.cloud/devapps/api-explorer#post-api-v2-speechandtextanalytics-programs
+  - type: read
+    method: GET
+    path: /api/v2/speechandtextanalytics/programs/{programId}
+    link: https://developer.genesys.cloud/devapps/api-explorer#get-api-v2-speechandtextanalytics-programs--programId-
+  - type: update
+    method: PUT
+    path: /api/v2/speechandtextanalytics/programs/{programId}
+    link: https://developer.genesys.cloud/devapps/api-explorer#put-api-v2-speechandtextanalytics-programs--programId-
+  - type: delete
+    method: DELETE
+    path: /api/v2/speechandtextanalytics/programs/{programId}
+    link: https://developer.genesys.cloud/devapps/api-explorer#delete-api-v2-speechandtextanalytics-programs--programId-
+  - type: getAll
+    method: GET
+    path: /api/v2/speechandtextanalytics/programs
+    link: https://developer.genesys.cloud/devapps/api-explorer#get-api-v2-speechandtextanalytics-programs
+testFiles: true
+initTest: true
+documentation: true
