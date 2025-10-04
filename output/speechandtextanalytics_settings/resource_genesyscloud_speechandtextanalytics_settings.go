@@ -32,7 +32,7 @@ func createSpeechandtextanalyticsSettings(ctx context.Context, d *schema.Resourc
 func readSpeechandtextanalyticsSettings(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	sdkConfig := meta.(*provider.ProviderMeta).ClientConfig
 	proxy := getSpeechandtextanalyticsSettingsProxy(sdkConfig)
-	cc := consistency_checker.NewConsistencyCheck(ctx, d, meta, ResourceSpeechandtextanalyticsSettings(), constants.DefaultConsistencyChecks, resourceName)
+	cc := consistency_checker.NewConsistencyCheck(ctx, d, meta, ResourceSpeechandtextanalyticsSettings(), constants.ConsistencyChecks(), resourceName)
 
 	log.Printf("Reading speechandtextanalytics settings %s", d.Id())
 
@@ -40,9 +40,9 @@ func readSpeechandtextanalyticsSettings(ctx context.Context, d *schema.ResourceD
 		speechTextAnalyticsSettingsResponse, resp, getErr := proxy.getSpeechandtextanalyticsSettingsById(ctx, d.Id())
 		if getErr != nil {
 			if util.IsStatus404(resp) {
-				return retry.RetryableError(util.BuildWithRetriesApiDiagnosticError(resourceName, fmt.Sprintf("Failed to read speechandtextanalytics settings %s: %s", d.Id(), getErr), resp))
+				return retry.RetryableError(util.BuildWithRetriesApiDiagnosticError(ResourceType, fmt.Sprintf("Failed to read speechandtextanalytics settings %s: %s", d.Id(), getErr), resp))
 			}
-			return retry.NonRetryableError(util.BuildWithRetriesApiDiagnosticError(resourceName, fmt.Sprintf("Failed to read speechandtextanalytics settings %s: %s", d.Id(), getErr), resp))
+			return retry.NonRetryableError(util.BuildWithRetriesApiDiagnosticError(ResourceType, fmt.Sprintf("Failed to read speechandtextanalytics settings %s: %s", d.Id(), getErr), resp))
 		}
 
 		resourcedata.SetNillableValueWithInterfaceArrayWithFunc(d, "default_program", speechTextAnalyticsSettingsResponse.DefaultProgram, flattenAddressableEntityRef)
@@ -65,7 +65,7 @@ func updateSpeechandtextanalyticsSettings(ctx context.Context, d *schema.Resourc
 	log.Printf("Updating speechandtextanalytics settings %s", *speechandtextanalyticsSettings.Name)
 	speechTextAnalyticsSettingsResponse, resp, err := proxy.updateSpeechandtextanalyticsSettings(ctx, d.Id(), &speechandtextanalyticsSettings)
 	if err != nil {
-		return util.BuildAPIDiagnosticError(resourceName, fmt.Sprintf("Failed to update speechandtextanalytics settings %s: %s", d.Id(), err), resp)
+		return util.BuildAPIDiagnosticError(ResourceType, fmt.Sprintf("Failed to update speechandtextanalytics settings %s: %s", d.Id(), err), resp)
 	}
 
 	log.Printf("Updated speechandtextanalytics settings %s", *speechTextAnalyticsSettingsResponse.Id)
