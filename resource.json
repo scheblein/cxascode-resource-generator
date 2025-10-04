@@ -1,0 +1,39 @@
+{
+  "name": "sentimentFeedback",
+  "packageName": "speechandtextanalyticsSentimentfeedback",
+  "properties": [
+    {
+      "name": "phrase",
+      "type": "string",
+      "description": "The phrase for which sentiment feedback is provided",
+      "required": true,
+      "isStringArray": false,
+      "isReference": false,
+      "tfSchemaData": {
+        "type": "schema.TypeString"
+      }
+    },
+    {
+      "name": "dialect",
+      "type": "string",
+      "description": "The dialect for the given phrase, dialect format is {language}-{country} where language follows ISO 639-1 standard and country follows ISO 3166-1 alpha 2 standard",
+      "required": true,
+      "isStringArray": false,
+      "isReference": false,
+      "tfSchemaData": {
+        "type": "schema.TypeString"
+      }
+    },
+    {
+      "name": "feedbackValue",
+      "type": "string",
+      "description": "The sentiment feedback value for the given phrase",
+      "required": true,
+      "isStringArray": false,
+      "isReference": false,
+      "tfSchemaData": {
+        "type": "schema.TypeString"
+      }
+    }
+  ]
+}

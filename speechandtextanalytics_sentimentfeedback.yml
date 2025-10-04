@@ -1,0 +1,18 @@
+package: speechandtextanalytics_sentimentfeedback
+mainObject: SentimentFeedback
+operations:
+  - type: create
+    method: POST
+    path: /api/v2/speechandtextanalytics/sentimentfeedback
+    link: https://developer.genesys.cloud/devapps/api-explorer#post-api-v2-speechandtextanalytics-sentimentfeedback
+  - type: delete
+    method: DELETE
+    path: /api/v2/speechandtextanalytics/sentimentfeedback/{sentimentFeedbackId}
+    link: https://developer.genesys.cloud/devapps/api-explorer#delete-api-v2-speechandtextanalytics-sentimentfeedback--sentimentFeedbackId-
+  - type: getAll
+    method: GET
+    path: /api/v2/speechandtextanalytics/sentimentfeedback
+    link: https://developer.genesys.cloud/devapps/api-explorer#get-api-v2-speechandtextanalytics-sentimentfeedback
+testFiles: true
+initTest: true
+documentation: true
