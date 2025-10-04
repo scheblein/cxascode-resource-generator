@@ -1,0 +1,103 @@
+{
+  "name": "dictionaryFeedback",
+  "packageName": "speechandtextanalyticsDictionaryfeedback",
+  "properties": [
+    {
+      "name": "term",
+      "type": "string",
+      "description": "The dictionary term which needs to be added to dictionary feedback system",
+      "required": true,
+      "isStringArray": false,
+      "isReference": false,
+      "tfSchemaData": {
+        "type": "schema.TypeString"
+      }
+    },
+    {
+      "name": "dialect",
+      "type": "string",
+      "description": "The dialect for the given term, dialect format is {language}-{country} where language follows ISO 639-1 standard and country follows ISO 3166-1 alpha 2 standard",
+      "required": true,
+      "isStringArray": false,
+      "isReference": false,
+      "tfSchemaData": {
+        "type": "schema.TypeString"
+      }
+    },
+    {
+      "name": "boostValue",
+      "type": "number",
+      "description": "A weighted value assigned to a phrase. The higher the value, the higher the likelihood that the system will choose the word or phrase from the possible alternatives. Boost range is from 1.0 to 10.0. Default is 2.0",
+      "required": false,
+      "isStringArray": false,
+      "isReference": false,
+      "tfSchemaData": {
+        "type": "schema.TypeFloat"
+      }
+    },
+    {
+      "name": "source",
+      "type": "string",
+      "description": "The source of the given dictionary feedback",
+      "required": false,
+      "isStringArray": false,
+      "isReference": false,
+      "tfSchemaData": {
+        "type": "schema.TypeString"
+      }
+    },
+    {
+      "name": "examplePhrases",
+      "type": "array",
+      "description": "A list of at least 3 and up to 20 unique phrases that are example usage of the term",
+      "required": true,
+      "isStringArray": false,
+      "isReference": false,
+      "flattenFunction": "flattenDictionaryFeedbackExamplePhrases",
+      "buildFunction": "buildDictionaryFeedbackExamplePhrases",
+      "tfSchemaData": {
+        "type": "schema.TypeList",
+        "element": "dictionaryFeedbackExamplePhraseResource"
+      },
+      "nestedObject": {
+        "name": "dictionaryFeedbackExamplePhrase",
+        "properties": [
+          {
+            "name": "phrase",
+            "type": "string",
+            "description": "The Example Phrase text. At least 3 words and up to 20 words",
+            "required": true,
+            "isStringArray": false,
+            "isReference": false,
+            "tfSchemaData": {
+              "type": "schema.TypeString"
+            }
+          },
+          {
+            "name": "source",
+            "type": "string",
+            "description": "The source of the given Example Phrase",
+            "required": false,
+            "isStringArray": false,
+            "isReference": false,
+            "tfSchemaData": {
+              "type": "schema.TypeString"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "soundsLike",
+      "type": "array",
+      "description": "A list of up to 10 terms that give examples of how the term sounds",
+      "required": false,
+      "isStringArray": true,
+      "isReference": false,
+      "tfSchemaData": {
+        "type": "schema.TypeList",
+        "element": "&schema.Schema{Type: schema.TypeString}"
+      }
+    }
+  ]
+}

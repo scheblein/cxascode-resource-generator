@@ -1,0 +1,26 @@
+package: speechandtextanalytics_dictionaryfeedback
+mainObject: DictionaryFeedback
+operations:
+  - type: create
+    method: POST
+    path: /api/v2/speechandtextanalytics/dictionaryfeedback
+    link: https://developer.genesys.cloud/devapps/api-explorer#post-api-v2-speechandtextanalytics-dictionaryfeedback
+  - type: read
+    method: GET
+    path: /api/v2/speechandtextanalytics/dictionaryfeedback/{dictionaryFeedbackId}
+    link: https://developer.genesys.cloud/devapps/api-explorer#get-api-v2-speechandtextanalytics-dictionaryfeedback--dictionaryFeedbackId-
+  - type: update
+    method: PUT
+    path: /api/v2/speechandtextanalytics/dictionaryfeedback/{dictionaryFeedbackId}
+    link: https://developer.genesys.cloud/devapps/api-explorer#put-api-v2-speechandtextanalytics-dictionaryfeedback--dictionaryFeedbackId-
+  - type: delete
+    method: DELETE
+    path: /api/v2/speechandtextanalytics/dictionaryfeedback/{dictionaryFeedbackId}
+    link: https://developer.genesys.cloud/devapps/api-explorer#delete-api-v2-speechandtextanalytics-dictionaryfeedback--dictionaryFeedbackId-
+  - type: getAll
+    method: GET
+    path: /api/v2/speechandtextanalytics/dictionaryfeedback
+    link: https://developer.genesys.cloud/devapps/api-explorer#get-api-v2-speechandtextanalytics-dictionaryfeedback
+testFiles: true
+initTest: true
+documentation: true
