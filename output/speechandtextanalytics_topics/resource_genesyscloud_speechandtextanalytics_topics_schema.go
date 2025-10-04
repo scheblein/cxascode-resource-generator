@@ -20,9 +20,9 @@ const resourceName = "genesyscloud_speechandtextanalytics_topics"
 
 // SetRegistrar registers all of the resources, datasources and exporters in the package
 func SetRegistrar(regInstance registrar.Registrar) {
-	regInstance.RegisterResource(resourceName, ResourceSpeechandtextanalyticsTopics())
-	regInstance.RegisterDataSource(resourceName, DataSourceSpeechandtextanalyticsTopics())
-	regInstance.RegisterExporter(resourceName, SpeechandtextanalyticsTopicsExporter())
+	regInstance.RegisterResource(ResourceType, ResourceSpeechandtextanalyticsTopics())
+	regInstance.RegisterDataSource(ResourceType, DataSourceSpeechandtextanalyticsTopics())
+	regInstance.RegisterExporter(ResourceType, SpeechandtextanalyticsTopicsExporter())
 }
 
 // ResourceSpeechandtextanalyticsTopics registers the genesyscloud_speechandtextanalytics_topics resource with Terraform

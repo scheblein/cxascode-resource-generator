@@ -31,11 +31,11 @@ func getAllAuthSpeechandtextanalyticsTopicss(ctx context.Context, clientConfig *
 
 	topics, resp, err := proxy.getAllSpeechandtextanalyticsTopics(ctx)
 	if err != nil {
-		return nil, util.BuildAPIDiagnosticError(resourceName, fmt.Sprintf("Failed to get speechandtextanalytics topics: %v", err), resp)
+		return nil, util.BuildAPIDiagnosticError(ResourceType, fmt.Sprintf("Failed to get speechandtextanalytics topics: %v", err), resp)
 	}
 
 	for _, topic := range *topics {
-		resources[*topic.Id] = &resourceExporter.ResourceMeta{Name: *topic.Name}
+		resources[*topic.Id] = &resourceExporter.ResourceMeta{BlockLabel: *topic.Name}
 	}
 
 	return resources, nil
@@ -51,7 +51,7 @@ func createSpeechandtextanalyticsTopics(ctx context.Context, d *schema.ResourceD
 	log.Printf("Creating speechandtextanalytics topics %s", *speechandtextanalyticsTopics.Name)
 	topic, resp, err := proxy.createSpeechandtextanalyticsTopics(ctx, &speechandtextanalyticsTopics)
 	if err != nil {
-		return util.BuildAPIDiagnosticError(resourceName, fmt.Sprintf("Failed to create speechandtextanalytics topics: %s", err), resp)
+		return util.BuildAPIDiagnosticError(ResourceType, fmt.Sprintf("Failed to create speechandtextanalytics topics: %s", err), resp)
 	}
 
 	d.SetId(*topic.Id)
@@ -63,7 +63,7 @@ func createSpeechandtextanalyticsTopics(ctx context.Context, d *schema.ResourceD
 func readSpeechandtextanalyticsTopics(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	sdkConfig := meta.(*provider.ProviderMeta).ClientConfig
 	proxy := getSpeechandtextanalyticsTopicsProxy(sdkConfig)
-	cc := consistency_checker.NewConsistencyCheck(ctx, d, meta, ResourceSpeechandtextanalyticsTopics(), constants.DefaultConsistencyChecks, resourceName)
+	cc := consistency_checker.NewConsistencyCheck(ctx, d, meta, ResourceSpeechandtextanalyticsTopics(), constants.ConsistencyChecks(), resourceName)
 
 	log.Printf("Reading speechandtextanalytics topics %s", d.Id())
 
@@ -71,9 +71,9 @@ func readSpeechandtextanalyticsTopics(ctx context.Context, d *schema.ResourceDat
 		topic, resp, getErr := proxy.getSpeechandtextanalyticsTopicsById(ctx, d.Id())
 		if getErr != nil {
 			if util.IsStatus404(resp) {
-				return retry.RetryableError(util.BuildWithRetriesApiDiagnosticError(resourceName, fmt.Sprintf("Failed to read speechandtextanalytics topics %s: %s", d.Id(), getErr), resp))
+				return retry.RetryableError(util.BuildWithRetriesApiDiagnosticError(ResourceType, fmt.Sprintf("Failed to read speechandtextanalytics topics %s: %s", d.Id(), getErr), resp))
 			}
-			return retry.NonRetryableError(util.BuildWithRetriesApiDiagnosticError(resourceName, fmt.Sprintf("Failed to read speechandtextanalytics topics %s: %s", d.Id(), getErr), resp))
+			return retry.NonRetryableError(util.BuildWithRetriesApiDiagnosticError(ResourceType, fmt.Sprintf("Failed to read speechandtextanalytics topics %s: %s", d.Id(), getErr), resp))
 		}
 
 		resourcedata.SetNillableValue(d, "name", topic.Name)
@@ -104,7 +104,7 @@ func updateSpeechandtextanalyticsTopics(ctx context.Context, d *schema.ResourceD
 	log.Printf("Updating speechandtextanalytics topics %s", *speechandtextanalyticsTopics.Name)
 	topic, resp, err := proxy.updateSpeechandtextanalyticsTopics(ctx, d.Id(), &speechandtextanalyticsTopics)
 	if err != nil {
-		return util.BuildAPIDiagnosticError(resourceName, fmt.Sprintf("Failed to update speechandtextanalytics topics %s: %s", d.Id(), err), resp)
+		return util.BuildAPIDiagnosticError(ResourceType, fmt.Sprintf("Failed to update speechandtextanalytics topics %s: %s", d.Id(), err), resp)
 	}
 
 	log.Printf("Updated speechandtextanalytics topics %s", *topic.Id)
@@ -118,7 +118,7 @@ func deleteSpeechandtextanalyticsTopics(ctx context.Context, d *schema.ResourceD
 
 	resp, err := proxy.deleteSpeechandtextanalyticsTopics(ctx, d.Id())
 	if err != nil {
-		return util.BuildAPIDiagnosticError(resourceName, fmt.Sprintf("Failed to delete speechandtextanalytics topics %s: %s", d.Id(), err), resp)
+		return util.BuildAPIDiagnosticError(ResourceType, fmt.Sprintf("Failed to delete speechandtextanalytics topics %s: %s", d.Id(), err), resp)
 	}
 
 	return util.WithRetries(ctx, 180*time.Second, func() *retry.RetryError {
@@ -129,9 +129,9 @@ func deleteSpeechandtextanalyticsTopics(ctx context.Context, d *schema.ResourceD
 				log.Printf("Deleted speechandtextanalytics topics %s", d.Id())
 				return nil
 			}
-			return retry.NonRetryableError(util.BuildWithRetriesApiDiagnosticError(resourceName, fmt.Sprintf("Error deleting speechandtextanalytics topics %s: %s", d.Id(), err), resp))
+			return retry.NonRetryableError(util.BuildWithRetriesApiDiagnosticError(ResourceType, fmt.Sprintf("Error deleting speechandtextanalytics topics %s: %s", d.Id(), err), resp))
 		}
 
-		return retry.RetryableError(util.BuildWithRetriesApiDiagnosticError(resourceName, fmt.Sprintf("speechandtextanalytics topics %s still exists", d.Id()), resp))
+		return retry.RetryableError(util.BuildWithRetriesApiDiagnosticError(ResourceType, fmt.Sprintf("speechandtextanalytics topics %s still exists", d.Id()), resp))
 	})
 }
