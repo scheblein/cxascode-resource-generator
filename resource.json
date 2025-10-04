@@ -1,0 +1,130 @@
+{
+  "name": "program",
+  "packageName": "speechandtextanalyticsPrograms",
+  "properties": [
+    {
+      "name": "name",
+      "type": "string",
+      "description": "",
+      "required": false,
+      "isStringArray": false,
+      "isReference": false,
+      "tfSchemaData": {
+        "type": "schema.TypeString"
+      }
+    },
+    {
+      "name": "description",
+      "type": "string",
+      "description": "",
+      "required": false,
+      "isStringArray": false,
+      "isReference": false,
+      "tfSchemaData": {
+        "type": "schema.TypeString"
+      }
+    },
+    {
+      "name": "published",
+      "type": "boolean",
+      "description": "",
+      "required": false,
+      "isStringArray": false,
+      "isReference": false,
+      "tfSchemaData": {
+        "type": "schema.TypeBool"
+      }
+    },
+    {
+      "name": "topics",
+      "type": "array",
+      "description": "",
+      "required": false,
+      "isStringArray": false,
+      "isReference": false,
+      "flattenFunction": "flattenBaseTopicEntitiys",
+      "buildFunction": "buildBaseTopicEntitiys",
+      "tfSchemaData": {
+        "type": "schema.TypeList",
+        "element": "baseTopicEntitiyResource"
+      },
+      "nestedObject": {
+        "name": "baseTopicEntitiy",
+        "properties": [
+          {
+            "name": "name",
+            "type": "string",
+            "description": "",
+            "required": false,
+            "isStringArray": false,
+            "isReference": false,
+            "tfSchemaData": {
+              "type": "schema.TypeString"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "tags",
+      "type": "array",
+      "description": "",
+      "required": false,
+      "isStringArray": true,
+      "isReference": false,
+      "tfSchemaData": {
+        "type": "schema.TypeList",
+        "element": "&schema.Schema{Type: schema.TypeString}"
+      }
+    },
+    {
+      "name": "publishedBy",
+      "type": "object",
+      "description": "",
+      "required": false,
+      "isStringArray": false,
+      "isReference": false,
+      "flattenFunction": "flattenAddressableEntityRef",
+      "buildFunction": "buildAddressableEntityRef",
+      "tfSchemaData": {
+        "type": "schema.TypeList",
+        "maxItems": 1,
+        "element": "addressableEntityRefResource"
+      },
+      "nestedObject": {
+        "name": "addressableEntityRef",
+        "properties": []
+      }
+    },
+    {
+      "name": "datePublished",
+      "type": "string",
+      "description": "Date time is represented as an ISO-8601 string. For example: yyyy-MM-ddTHH:mm:ss[.mmm]Z",
+      "required": false,
+      "isStringArray": false,
+      "isReference": false,
+      "tfSchemaData": {
+        "type": "schema.TypeString"
+      }
+    },
+    {
+      "name": "topicLinksJob",
+      "type": "object",
+      "description": "",
+      "required": false,
+      "isStringArray": false,
+      "isReference": false,
+      "flattenFunction": "flattenAddressableEntityRef",
+      "buildFunction": "buildAddressableEntityRef",
+      "tfSchemaData": {
+        "type": "schema.TypeList",
+        "maxItems": 1,
+        "element": "addressableEntityRefResource"
+      },
+      "nestedObject": {
+        "name": "addressableEntityRef",
+        "properties": []
+      }
+    }
+  ]
+}
