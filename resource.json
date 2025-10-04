@@ -1,0 +1,319 @@
+{
+  "name": "staCategory",
+  "packageName": "speechandtextanalyticsCategories",
+  "properties": [
+    {
+      "name": "name",
+      "type": "string",
+      "description": "",
+      "required": false,
+      "isStringArray": false,
+      "isReference": false,
+      "tfSchemaData": {
+        "type": "schema.TypeString"
+      }
+    },
+    {
+      "name": "description",
+      "type": "string",
+      "description": "The description of the category",
+      "required": false,
+      "isStringArray": false,
+      "isReference": false,
+      "tfSchemaData": {
+        "type": "schema.TypeString"
+      }
+    },
+    {
+      "name": "interactionType",
+      "type": "string",
+      "description": "The type of interaction the category will apply to",
+      "required": true,
+      "isStringArray": false,
+      "isReference": false,
+      "tfSchemaData": {
+        "type": "schema.TypeString"
+      }
+    },
+    {
+      "name": "criteria",
+      "type": "object",
+      "description": "A collection of conditions joined together by logical operation to provide more refined filtering of conversations",
+      "required": true,
+      "isStringArray": false,
+      "isReference": false,
+      "flattenFunction": "flattenOperand",
+      "buildFunction": "buildOperand",
+      "tfSchemaData": {
+        "type": "schema.TypeList",
+        "maxItems": 1,
+        "element": "operandResource"
+      },
+      "nestedObject": {
+        "name": "operand",
+        "properties": [
+          {
+            "name": "type",
+            "type": "string",
+            "description": "The Operand type of the category",
+            "required": true,
+            "isStringArray": false,
+            "isReference": false,
+            "tfSchemaData": {
+              "type": "schema.TypeString"
+            }
+          },
+          {
+            "name": "occurrence",
+            "type": "integer",
+            "description": "The minimum number of occurrences of the defined operand type",
+            "required": false,
+            "isStringArray": false,
+            "isReference": false,
+            "tfSchemaData": {
+              "type": "schema.TypeInt"
+            }
+          },
+          {
+            "name": "inverted",
+            "type": "boolean",
+            "description": "Applies a NOT modifier to the operand group",
+            "required": false,
+            "isStringArray": false,
+            "isReference": false,
+            "tfSchemaData": {
+              "type": "schema.TypeBool"
+            }
+          },
+          {
+            "name": "term",
+            "type": "object",
+            "description": "Filter interaction by word(s)",
+            "required": false,
+            "isStringArray": false,
+            "isReference": false,
+            "flattenFunction": "flattenTerm",
+            "buildFunction": "buildTerm",
+            "tfSchemaData": {
+              "type": "schema.TypeList",
+              "maxItems": 1,
+              "element": "termResource"
+            },
+            "nestedObject": {
+              "name": "term",
+              "properties": [
+                {
+                  "name": "word",
+                  "type": "string",
+                  "description": "Find term in interaction",
+                  "required": true,
+                  "isStringArray": false,
+                  "isReference": false,
+                  "tfSchemaData": {
+                    "type": "schema.TypeString"
+                  }
+                },
+                {
+                  "name": "participantType",
+                  "type": "string",
+                  "description": "Dictates if term operand must come from the internal, external or both participants",
+                  "required": true,
+                  "isStringArray": false,
+                  "isReference": false,
+                  "tfSchemaData": {
+                    "type": "schema.TypeString"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "topicId",
+            "type": "string",
+            "description": "Filter interaction by topic ID",
+            "required": false,
+            "isStringArray": false,
+            "isReference": false,
+            "tfSchemaData": {
+              "type": "schema.TypeString"
+            }
+          },
+          {
+            "name": "voiceSecondsPosition",
+            "type": "object",
+            "description": "Dictates when the operand must occur in a voice interaction",
+            "required": false,
+            "isStringArray": false,
+            "isReference": false,
+            "flattenFunction": "flattenOperandPosition",
+            "buildFunction": "buildOperandPosition",
+            "tfSchemaData": {
+              "type": "schema.TypeList",
+              "maxItems": 1,
+              "element": "operandPositionResource"
+            },
+            "nestedObject": {
+              "name": "operandPosition",
+              "properties": [
+                {
+                  "name": "startingPositionValue",
+                  "type": "integer",
+                  "description": "Defines starting point of a position range - number of seconds or words from the start or from the end of the interaction",
+                  "required": false,
+                  "isStringArray": false,
+                  "isReference": false,
+                  "tfSchemaData": {
+                    "type": "schema.TypeInt"
+                  }
+                },
+                {
+                  "name": "startingPositionDirection",
+                  "type": "string",
+                  "description": "Dictates starting position directionality",
+                  "required": false,
+                  "isStringArray": false,
+                  "isReference": false,
+                  "tfSchemaData": {
+                    "type": "schema.TypeString"
+                  }
+                },
+                {
+                  "name": "endingPositionValue",
+                  "type": "integer",
+                  "description": "Defines ending point of a position range - number of seconds or words from the start or from the end of the interaction",
+                  "required": false,
+                  "isStringArray": false,
+                  "isReference": false,
+                  "tfSchemaData": {
+                    "type": "schema.TypeInt"
+                  }
+                },
+                {
+                  "name": "endingPositionDirection",
+                  "type": "string",
+                  "description": "Dictates ending position directionality",
+                  "required": false,
+                  "isStringArray": false,
+                  "isReference": false,
+                  "tfSchemaData": {
+                    "type": "schema.TypeString"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "digitalWordsPosition",
+            "type": "object",
+            "description": "Dictates when the operand must occur in a digital interaction",
+            "required": false,
+            "isStringArray": false,
+            "isReference": false,
+            "flattenFunction": "flattenOperandPosition",
+            "buildFunction": "buildOperandPosition",
+            "tfSchemaData": {
+              "type": "schema.TypeList",
+              "maxItems": 1,
+              "element": "operandPositionResource"
+            },
+            "nestedObject": {
+              "name": "operandPosition",
+              "properties": []
+            }
+          },
+          {
+            "name": "infixOperator",
+            "type": "object",
+            "description": "Defines a logical operation that is applied on the current operand, against the following operand",
+            "required": false,
+            "isStringArray": false,
+            "isReference": false,
+            "flattenFunction": "flattenInfixOperator",
+            "buildFunction": "buildInfixOperator",
+            "tfSchemaData": {
+              "type": "schema.TypeList",
+              "maxItems": 1,
+              "element": "infixOperatorResource"
+            },
+            "nestedObject": {
+              "name": "infixOperator",
+              "properties": [
+                {
+                  "name": "operatorType",
+                  "type": "string",
+                  "description": "The logical operation that is applied on the operand against the following operand",
+                  "required": true,
+                  "isStringArray": false,
+                  "isReference": false,
+                  "tfSchemaData": {
+                    "type": "schema.TypeString"
+                  }
+                },
+                {
+                  "name": "operatorPosition",
+                  "type": "object",
+                  "description": "Dictates when the following operand should occur relative to current operand",
+                  "required": false,
+                  "isStringArray": false,
+                  "isReference": false,
+                  "flattenFunction": "flattenOperatorPosition",
+                  "buildFunction": "buildOperatorPosition",
+                  "tfSchemaData": {
+                    "type": "schema.TypeList",
+                    "maxItems": 1,
+                    "element": "operatorPositionResource"
+                  },
+                  "nestedObject": {
+                    "name": "operatorPosition",
+                    "properties": [
+                      {
+                        "name": "voiceSecondsPosition",
+                        "type": "integer",
+                        "description": "Number of seconds (for voice interactions) from operand match",
+                        "required": false,
+                        "isStringArray": false,
+                        "isReference": false,
+                        "tfSchemaData": {
+                          "type": "schema.TypeInt"
+                        }
+                      },
+                      {
+                        "name": "digitalWordsPosition",
+                        "type": "integer",
+                        "description": "Number of words (for digital interactions) from operand match",
+                        "required": false,
+                        "isStringArray": false,
+                        "isReference": false,
+                        "tfSchemaData": {
+                          "type": "schema.TypeInt"
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "operands",
+            "type": "array",
+            "description": "Contains a new level of operands",
+            "required": false,
+            "isStringArray": false,
+            "isReference": false,
+            "flattenFunction": "flattenOperands",
+            "buildFunction": "buildOperands",
+            "tfSchemaData": {
+              "type": "schema.TypeList",
+              "element": "operandResource"
+            },
+            "nestedObject": {
+              "name": "operand",
+              "properties": []
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

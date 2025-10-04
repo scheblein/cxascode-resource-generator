@@ -1,0 +1,26 @@
+package: speechandtextanalytics_categories
+mainObject: StaCategory
+operations:
+  - type: create
+    method: POST
+    path: /api/v2/speechandtextanalytics/categories
+    link: https://developer.genesys.cloud/devapps/api-explorer#post-api-v2-speechandtextanalytics-categories
+  - type: read
+    method: GET
+    path: /api/v2/speechandtextanalytics/categories/{categoryId}
+    link: https://developer.genesys.cloud/devapps/api-explorer#get-api-v2-speechandtextanalytics-categories--categoryId-
+  - type: update
+    method: PUT
+    path: /api/v2/speechandtextanalytics/categories/{categoryId}
+    link: https://developer.genesys.cloud/devapps/api-explorer#put-api-v2-speechandtextanalytics-categories--categoryId-
+  - type: delete
+    method: DELETE
+    path: /api/v2/speechandtextanalytics/categories/{categoryId}
+    link: https://developer.genesys.cloud/devapps/api-explorer#delete-api-v2-speechandtextanalytics-categories--categoryId-
+  - type: getAll
+    method: GET
+    path: /api/v2/speechandtextanalytics/categories
+    link: https://developer.genesys.cloud/devapps/api-explorer#get-api-v2-speechandtextanalytics-categories
+testFiles: true
+initTest: true
+documentation: true
