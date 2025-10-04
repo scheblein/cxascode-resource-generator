@@ -1,0 +1,59 @@
+{
+  "name": "organizationPresenceDefinition",
+  "packageName": "organizationPresenceDefinition",
+  "properties": [
+    {
+      "name": "name",
+      "type": "string",
+      "description": "",
+      "required": false,
+      "isStringArray": false,
+      "isReference": false,
+      "tfSchemaData": {
+        "type": "schema.TypeString"
+      }
+    },
+    {
+      "name": "languageLabels",
+      "type": "unknown",
+      "description": "The label used for the definition in each specified language",
+      "required": true,
+      "isStringArray": false,
+      "isReference": false,
+      "tfSchemaData": {}
+    },
+    {
+      "name": "systemPresence",
+      "type": "string",
+      "description": "",
+      "required": false,
+      "isStringArray": false,
+      "isReference": false,
+      "tfSchemaData": {
+        "type": "schema.TypeString"
+      }
+    },
+    {
+      "name": "divisionId",
+      "type": "string",
+      "description": "",
+      "required": false,
+      "isStringArray": false,
+      "isReference": false,
+      "tfSchemaData": {
+        "type": "schema.TypeString"
+      }
+    },
+    {
+      "name": "deactivated",
+      "type": "boolean",
+      "description": "",
+      "required": false,
+      "isStringArray": false,
+      "isReference": false,
+      "tfSchemaData": {
+        "type": "schema.TypeBool"
+      }
+    }
+  ]
+}

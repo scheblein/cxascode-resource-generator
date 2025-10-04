@@ -1,0 +1,28 @@
+package: organization_presence_definition
+mainObject: OrganizationPresenceDefinition
+operations:
+  - type: create
+    method: POST
+    path: /api/v2/presence/definitions
+    link: https://developer.genesys.cloud/devapps/api-explorer#post-api-v2-presence-definitions
+  - type: read
+    method: GET
+    path: /api/v2/presence/definitions/{definitionId}
+    link: https://developer.genesys.cloud/devapps/api-explorer#get-api-v2-presence-definitions--definitionId-
+  - type: update
+    method: PUT
+    path: /api/v2/presence/definitions/{definitionId}
+    link: https://developer.genesys.cloud/devapps/api-explorer#put-api-v2-presence-definitions--definitionId-
+  - type: delete
+    method: DELETE
+    path: /api/v2/presence/definitions/{definitionId}
+    link: https://developer.genesys.cloud/devapps/api-explorer#delete-api-v2-presence-definitions--definitionId-
+  - type: getAll
+    method: GET
+    path: /api/v2/presence/definitions
+    link: https://developer.genesys.cloud/devapps/api-explorer#get-api-v2-presence-definitions
+testFiles: true
+initTest: true
+documentation: true
+ignoreProperties:
+  - type
