@@ -3,7 +3,7 @@ package speechandtextanalytics_topics
 import (
 	"context"
 	"fmt"
-	"github.com/mypurecloud/platform-client-sdk-go/v133/platformclientv2"
+	"github.com/mypurecloud/platform-client-sdk-go/v165/platformclientv2"
 	"log"
 )
 
