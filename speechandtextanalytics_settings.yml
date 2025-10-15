@@ -12,3 +12,4 @@ operations:
 documentation: true
 testFiles: true
 initTest: true
+goSDKVersion: 165
