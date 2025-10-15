@@ -24,3 +24,4 @@ operations:
 testFiles: true
 initTest: true
 documentation: true
+goSDKVersion: 165
