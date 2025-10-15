@@ -26,3 +26,4 @@ initTest: true
 documentation: true
 ignoreProperties:
   - type
+goSDKVersion: 165
